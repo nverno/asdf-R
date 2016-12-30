@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+sort_cmd='sort'
+if sort --help | grep -q -- '-V'; then
+  sort_cmd='sort -V'
+fi
+
+major_versions="2 3"
+vers=()
+for v in $major_versions; do
+    uri="https://cran.r-project.org/src/base/R-$v/"
+    ver=$(curl -s $uri | grep -Po "(?<=R-)[0-9.a-zA-Z-]+(?=\.tar\.gz)" | 
+              uniq | $sort_cmd)
+    vers=("${vers[@]}" "${ver[@]}")
+done
+
+# daily builds
+uri="https://stat.ethz.ch/R/daily/"
+ver=$(curl -s $uri | 
+          grep -Po "(?<=R-)(devel|patched)_[0-9.a-zA-Z-]+(?=\.tar\.gz)" |
+          uniq | $sort_cmd)
+vers=("${ver[@]}" "${vers[@]}")
+
+# empty on travis?
+if [ ${#vers} -eq 0 ]; then
+    echo "3.3.2"
+else
+    echo ${vers[@]}
+fi

@@ -1,0 +1,32 @@
+language: c
+sudo: required
+  
+before_install:
+  - sudo echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" \
+         >> /etc/apt/sources.list;
+    gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9;
+    gpg -a --export E084DAB9 | sudo apt-key add -;
+    sudo apt-get update;
+    sudo apt-get build-dep r-base;
+    wget http://zlib.net/zlib-1.2.8.tar.gz;
+    tar xzvf zlib-1.2.8.tar.gz;
+    cd zlib-1.2.8;
+    ./configure;
+    make;
+    sudo make install;
+    cd /tmp;
+    wget --no-check-certificate https://curl.haxx.se/download/curl-7.52.1.tar.gz;
+    tar xzvf curl-7.52.1.tar.gz;
+    cd curl-7.52.1;
+    ./configure;
+    make -j3;
+    sudo make install;
+  
+before_script:
+  - git clone https://github.com/asdf-vm/asdf.git
+  - . asdf/asdf.sh
+
+os:
+  - linux
+
+script: asdf plugin-test R https://github.com/nverno/asdf-R.git
