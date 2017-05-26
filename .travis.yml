@@ -28,6 +28,6 @@ before_script:
 
 os:
   - linux
-  - osx
+  # - osx
 
 script: asdf plugin-test R https://github.com/nverno/asdf-R.git
