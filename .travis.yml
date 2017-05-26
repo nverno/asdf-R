@@ -1,4 +1,4 @@
-language: c
+language: R
 sudo: required
   
 before_install:
