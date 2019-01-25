@@ -5,9 +5,9 @@ set -e
 install_R() {
     local install_type version install_path major_version tmp_download_dir
     local uri outdir
-    install_type=$1
-    version=$2
-    install_path=$3
+    install_type="$1"
+    version="$2"
+    install_path="$3"
     major_version=${version:0:1}
 
     if [ "$install_type" = "version" ]; then
@@ -16,9 +16,9 @@ install_R() {
     fi
     
     if [ -z "$TMPDIR" ]; then
-        tmp_download_dir=$(mktemp -d)
+        tmp_download_dir="$(mktemp -d)"
     else
-        tmp_download_dir=$TMPDIR
+        tmp_download_dir="$TMPDIR"
     fi
 
     if [ "$major_version" = "d" ] || [ "$major_version" = "p" ]; then
