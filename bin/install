@@ -10,8 +10,7 @@ install_R() {
     install_path="$3"
     major_version=${version:0:1}
 
-    if [ "$install_type" = "version" ]; then
-        echo "Only source builds are supported"
+    if [ "$install_type" != "version" ]; then
         exit 1
     fi
     
