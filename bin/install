@@ -43,7 +43,7 @@ install_R() {
         configure_options="$(construct_configure_options "$install_path")"
         # shellcheck disable=SC2086
         ./configure $configure_options
-        make 
+        make -j6
         make install
     )
 }
